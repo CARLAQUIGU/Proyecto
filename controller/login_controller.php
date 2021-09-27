@@ -23,14 +23,14 @@ class LoginController {
         require_once 'view/Admin/index.php';
     }
 
-    public function indexCargo() {
+    public function index1() {
         session_start();
-        require_once 'view/Admin/cargo.php';
+        require_once 'view/Admin/index1.php';
     }
     
-    public function indexDistrito() {
+    public function index2() {
         session_start();
-        require_once 'view/Admin/distrito.php';
+        require_once 'view/Admin/index2.php';
     }
 
     public function login() {
@@ -47,11 +47,11 @@ class LoginController {
                 $_SESSION['id']=$cot->id;
                 $_SESSION['nivel']=$cot->nivel;
                 if ($cot->nivel== 1) {
-                    header("location:index.php?controller=login&action=indexCargo");
+                    header("location:index.php?controller=login&action=index1");
                 }
 
                 else if ($cot->nivel==2) {
-                    header("location:index.php?controller=login&action=indexDistrito");
+                    header("location:index.php?controller=login&action=index2");
                 }
 
                 else {

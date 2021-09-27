@@ -21,27 +21,6 @@
 	<title>Dashtrans - Bootstrap5 Admin Template</title>
 </head>
 
-<?php
-if($_POST){
-	session_start();
-	require('core/conexion.php');
-	$u=$_POST['usuario'];
-	$p=$_POST['password'];
-	$cone->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$query=$cone->prepare("select * from usuario where usuario= :u and pasword= :p");
-	$query->binParam(":u" ,$u);
-	$query->binParam(":p" ,$p);
-	$query->execute();
-	$usu=$query->fetch(PDO::FETCH_ASSOC);
-	if ($usu) {
-		$_SESSION['usu']=$usu["usuario"];
-		header("location:index.php?controller=login&action=indexCargo");
-
-	} else {
-		echo "Usuario o PAsword incorrecto";
-	}
-}
-?>
 
 <body class="bg-theme bg-theme6">
 	<!--wrapper-->

@@ -22,24 +22,10 @@
 				</li>
 				<li class="menu-label">Elementos</li>
 				<li>
-					<a href="index.php?controller=distrito&action=indexDistrito">
-						<div class="parent-icon"><i class='bx bx-cookie'></i>
-						</div>
-						<div class="menu-title">Distrito</div>
-					</a>
-				</li>
-				<li>
 					<a href="index.php?controller=cargo&action=indexCargo">
 						<div class="parent-icon"><i class='bx bx-cookie'></i>
 						</div>
 						<div class="menu-title">Cargo</div>
-					</a>
-				</li>
-				<li>
-					<a href="index.php?controller=provincia&action=indexProvincia">
-						<div class="parent-icon"><i class='bx bx-cookie'></i>
-						</div>
-						<div class="menu-title">Provincia</div>
 					</a>
 				</li>
 				<li>
@@ -54,20 +40,6 @@
 						<div class="parent-icon"><i class='bx bx-cookie'></i>
 						</div>
 						<div class="menu-title">Funcionario</div>
-					</a>
-				</li>
-				<li>
-					<a href="index.php?controller=directordistrital&action=indexDirectorDistrital">
-						<div class="parent-icon"><i class='bx bx-cookie'></i>
-						</div>
-						<div class="menu-title">Directores Distritales</div>
-					</a>
-				</li>
-				<li>
-					<a href="index.php?controller=login&action=indexUsuario">
-						<div class="parent-icon"><i class='bx bx-cookie'></i>
-						</div>
-						<div class="menu-title">Usuarios</div>
 					</a>
 				</li>
 				<li>
