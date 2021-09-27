@@ -15,13 +15,9 @@ class LoginController {
     }
 
     public function indexInicio() {
-        require_once 'log.php';
+        require_once 'login.php';
     }
 
-    public function indexAdmin() {
-        session_start();
-        require_once 'view/Admin/index.php';
-    }
 
     public function index1() {
         session_start();
