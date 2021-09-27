@@ -2210,7 +2210,7 @@ a {
 
 .email-star {
 
-	color: ##ffffff;
+	color: #ffffff;
 
 }
 
@@ -2545,6 +2545,7 @@ body.bg-theme2 {
 	background-image: url(../images/bg-themes/2.png);
 
 }
+
 
 .bg-theme {
 
@@ -3468,6 +3469,7 @@ input::placeholder {
 
 }
 
+
 #theme3 {
 
 	background-image: url(../images/bg-themes/3.png);
@@ -3599,7 +3601,6 @@ body.bg-theme2 {
 	background-image: url(../images/bg-themes/2.png);
 
 }
-
 body.bg-theme3 {
 
 	background-image: url(../images/bg-themes/3.png);

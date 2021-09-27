@@ -4,10 +4,12 @@
 					<img src="assets/images/logoo.png" class="logo-icon" alt="logo icon">
 				</div>
 				<div>
-					<h4 class="logo-text">DDELP</h4>
+					<h4 class="logo-text">DDELP   -</h4>
 				</div>
-				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
-				</div>
+				<a href="index.php?controller=login&action=cerrar">
+					<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
+					</div>
+				</a>
 			</div>
 			<!--navigation-->
 			<ul class="metismenu" id="menu">

@@ -15,33 +15,43 @@ class LoginController {
     }
 
     public function indexInicio() {
-        require_once 'login.php';
+        require_once 'log.php';
     }
 
     public function indexAdmin() {
         session_start();
         require_once 'view/Admin/index.php';
     }
+
+    public function indexCargo() {
+        session_start();
+        require_once 'view/Admin/cargo.php';
+    }
     
+    public function indexDistrito() {
+        session_start();
+        require_once 'view/Admin/distrito.php';
+    }
 
     public function login() {
         session_start();
-        $login=new Admin();
-
-        if(isset($_REQUEST['user']) && isset($_REQUEST['pasw'])) {
-            $cot=$login->loginA($_REQUEST['user'], $_REQUEST['pasw']);
-
+        $login=new Usuario;
+        $pas=$_REQUEST['password'];
+        $pas=md5($pas);
+        echo $pas;
+        if(isset($_REQUEST['usuario']) && isset($_REQUEST['password'])) {
+            $cot=$login->loginA($_REQUEST['usuario'], $pas);
             if ($cot) {
-                $_SESSION['nane']=$cot->nombre;
-                $_SESSION['idEmpleado']=$cot->id;
-                $_SESSION['nivel']=$cot->rol;
-
-                if ($cot->rol==0) {
-                    header("location:index.php?controller=login&action=indexDoctor");
+                $_SESSION['ingreso']='si';
+                $_SESSION['usuario']=$cot->usuario;
+                $_SESSION['id']=$cot->id;
+                $_SESSION['nivel']=$cot->nivel;
+                if ($cot->nivel== 1) {
+                    header("location:index.php?controller=login&action=indexCargo");
                 }
 
-                else if ($cot->rol==1) {
-                    header("location:index.php?controller=login&action=indexMaestro");
+                else if ($cot->nivel==2) {
+                    header("location:index.php?controller=login&action=indexDistrito");
                 }
 
                 else {
@@ -54,17 +64,19 @@ class LoginController {
                 header("location:index.php?res=1");
             }
 
-        }
-
-        else {
+        }else {
             header("location:index.php?res=2");
         }
+    }
+
+    public function lo(){
+        
     }
 
     public function cerrar() {
         session_start();
         session_destroy();
-        header("location:index.php");
+        header("location:log.php");
     }
 
 }

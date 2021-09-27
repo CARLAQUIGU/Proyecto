@@ -3,7 +3,7 @@ require_once 'core/crud.php';
 class Usuario extends Crud{
     private $id;
     private $usuario;
-    private $password;
+    private $pasword;
     private $nivel;
     private $estado;
     private $id_director;
@@ -23,7 +23,7 @@ class Usuario extends Crud{
     public function crear(){  
           try{
             $stm=$this->pdo->prepare("INSERT INTO ".self::TABLE." (usuario, pasword, nivel, estado, id_director) VALUES (?,?,?,?,?)");
-            $stm->execute(array($this->usuario,$this->password,$this->nivel,$this->estado,$this->id_director));
+            $stm->execute(array($this->usuario,$this->pasword,$this->nivel,$this->estado,$this->id_director));
           }catch(PDOException $e){
             echo $e->getMessage();
           }
@@ -31,11 +31,20 @@ class Usuario extends Crud{
     public function actualizar(){
         try{
             $stm=$this->pdo->prepare("UPDATE ".self::TABLE." SET usuario=?, pasword=?, nivel=?, estado=?, id_director=? WHERE id=?");
-            $stm->execute(array($this->usuario,$this->password,$this->nivel,$this->estado,$this->director_distrital_id,$this->id));
+            $stm->execute(array($this->usuario,$this->pasword,$this->nivel,$this->estado,$this->director_distrital_id,$this->id));
           }catch(PDOException $e){
             echo $e->getMessage();
           }
     }
+    public function loginA($ususario,$pasword){
+      try{
+          $stm=$this->pdo->prepare("SELECT * FROM ".self::TABLE." WHERE usuario=? AND pasword=?");
+          $stm->execute(array($ususario,$pasword));
+          return $stm->fetch(PDO::FETCH_OBJ);
+        }catch(PDOException $e){
+          echo $e->getMessage();
+        }
+  }
     public function mostrar2(){
       try {    
           $stm = $this->pdo->prepare("SELECT concat(d.nombre,' ',d.paterno,' ',d.materno)as nombres ,u.usuario, u.nivel FROM usuario u inner join directores_distritales d on d.id=u.id_director");
@@ -49,4 +58,6 @@ class Usuario extends Crud{
     }
     
 }
+
+
 ?>
