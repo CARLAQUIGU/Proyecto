@@ -18,15 +18,14 @@ class LoginController {
         require_once 'login.php';
     }
 
-
-    public function index1() {
+    public function Admin() {
         session_start();
-        require_once 'view/Admin/index1.php';
+        require_once 'view/Admin/PrincipalAdmin.php';
     }
     
-    public function index2() {
+    public function Director() {
         session_start();
-        require_once 'view/Admin/index2.php';
+        require_once 'view/Admin/PrincipalDirector.php';
     }
 
     public function login() {
@@ -43,11 +42,11 @@ class LoginController {
                 $_SESSION['id']=$cot->id;
                 $_SESSION['nivel']=$cot->nivel;
                 if ($cot->nivel== 1) {
-                    header("location:index.php?controller=login&action=index1");
+                    header("location:index.php?controller=login&action=Admin");
                 }
 
                 else if ($cot->nivel==2) {
-                    header("location:index.php?controller=login&action=index2");
+                    header("location:index.php?controller=login&action=Director");
                 }
 
                 else {
@@ -72,7 +71,7 @@ class LoginController {
     public function cerrar() {
         session_start();
         session_destroy();
-        header("location:log.php");
+        header("location:login.php");
     }
 
 }

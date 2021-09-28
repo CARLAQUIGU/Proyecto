@@ -55,21 +55,21 @@
 											</div>
 											<div class="col-12">
 												<div class="d-grid">
-													<button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Sign in</button>
+													<button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Sign in</button>
 												</div>
 												<?php
 													if(isset($_REQUEST['res'])){
 														if ($_REQUEST['res']==1) {
 												?>
 														<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-															<strong>Huvo un Error! <br></strong> Verifica tu Usuario y Password. 
+														 Verifica datos de Usuario y Password. 
 														</div>
 
 												<?php        
 														}else if($_REQUEST['res']==2){
 												?>
 														<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-															<strong>Huvo un Error! <br></strong> 
+															No se Inicio
 														</div>
 												<?php
 														}
