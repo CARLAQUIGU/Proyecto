@@ -69,13 +69,13 @@ require('seguridad.php');
 														<div class="form-group">
 														<input type="hidden" name="id" id="id">
 														<label for="">Nombre</label>
-														<input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre del Funcionario">
+														<input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="helpId" onblur="mayus(this);" placeholder="Nombre del Funcionario">
 														<br>
 														<label for="">Paterno</label>
-														<input type="text" class="form-control" name="paterno" id="paterno" aria-describedby="helpId" placeholder="Paterno del Funcionario">
+														<input type="text" class="form-control" name="paterno" id="paterno" aria-describedby="helpId"  onblur="mayus(this);" placeholder="Paterno del Funcionario">
 														<br>
 														<label for="">Materno</label>
-														<input type="text" class="form-control" name="materno" id="materno" aria-describedby="helpId" placeholder="Materno del Funcionario">
+														<input type="text" class="form-control" name="materno" id="materno" aria-describedby="helpId" onblur="mayus(this);" placeholder="Materno del Funcionario">
 														<br>
 														<label for="">C.I.</label>
 														<input type="text" class="form-control" name="ci" id="ci" aria-describedby="helpId" placeholder="C.I. del Funcionario">
@@ -224,6 +224,11 @@ require('seguridad.php');
 		$(document).ready(function() {
 			$('#example').DataTable();
 		} );
+
+		function mayus(elemento){
+			let texto=elemento.value;
+			elemento.value=texto.toUpperCase();
+		}
 		</script>
 		<!--end page wrapper -->
 		<!--start overlay-->
