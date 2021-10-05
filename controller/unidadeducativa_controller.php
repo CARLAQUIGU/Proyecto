@@ -20,8 +20,7 @@ class UnidadEducativaController {
         $unidadeducativa->espacio=$_REQUEST['espacio'];
         $unidadeducativa->tipo=$_REQUEST['tipo'];
         $unidadeducativa->estado=$_REQUEST['estado'];
-        $unidadeducativa->distrito_id=$_REQUEST['codigodistrito'];
-        $unidadeducativa->provincia_id=$_REQUEST['codigoprovincia'];
+        $unidadeducativa->id_distrito=$_REQUEST['codigodistrito'];
         $unidadeducativa->id=$_REQUEST['id'];
         $unidadeducativa->id>0?$unidadeducativa->actualizar():$unidadeducativa->crear();
         header("location:index.php?controller=unidadeducativa&action=indexUnidadEducativa");

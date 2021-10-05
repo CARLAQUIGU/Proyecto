@@ -15,6 +15,7 @@ require('seguridad.php');
 	<link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
 	<link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 	<link href="assets/plugins/highcharts/css/highcharts-white.css" rel="stylesheet" />
+	<link href="assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 	<!-- loader-->
 	<link href="assets/css/pace.min.css" rel="stylesheet" />
 	<script src="assets/js/pace.min.js"></script>
@@ -22,7 +23,7 @@ require('seguridad.php');
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/css/app.css" rel="stylesheet">
 	<link href="assets/css/icons.css" rel="stylesheet">
-	<!-- Theme Style CSS -->
+	<!-- Theme Style CSS --> 
 	<link rel="stylesheet" href="assets/css/dark-theme.css" />
 	<link rel="stylesheet" href="assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="assets/css/header-colors.css" />
@@ -39,7 +40,13 @@ require('seguridad.php');
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--sidebar wrapper -->
-        <?php include 'nav.php' ?>
+		<?php
+		if($_SESSION['nivel']==1){
+			include ("nav.php");
+		}else{
+			include ("nav2.php");
+		}
+		?>
         <!--end sidebar wrapper -->
 		<!--start header -->
         <header>
@@ -69,7 +76,7 @@ require('seguridad.php');
 														<br>
 														<input type="hidden" id="id" name="id">
 														<label for="">Provincia</label>
-														<input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre Provincia">
+														<input onblur="mayus(this);" type="text" class="form-control" name="nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre Provincia">
 														<br>
 														<button type="submit" class="btn btn-primary">Guardar</button>
 													</form>
@@ -91,8 +98,7 @@ require('seguridad.php');
 							<div class="card-body">
 								<h3>Lista de Provincia</h3>
                                 <hr>
-								
-                                <table class="table table-striped table-bordered" >
+                                <table class="table table-striped table-bordered" id="example" name="example">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>#</th>
@@ -141,6 +147,10 @@ require('seguridad.php');
 		$(document).ready(function() {
 			$('#example').DataTable();
 		} );
+		function mayus(elemento){
+			let texto=elemento.value;
+			elemento.value=texto.toUpperCase();
+		}
 		</script>
 		<!--end page wrapper -->
 		<!--start overlay-->
@@ -153,40 +163,6 @@ require('seguridad.php');
 		</footer>
 	</div>
 	<!--end wrapper-->
-	<!--start switcher-->
-	<div class="switcher-wrapper">
-		<div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
-		</div>
-		<div class="switcher-body">
-			<div class="d-flex align-items-center">
-				<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
-				<button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
-			</div>
-			<hr/>
-			<p class="mb-0">Gaussian Texture</p>
-			<hr>
-			<ul class="switcher">
-				<li id="theme1"></li>
-				<li id="theme2"></li>
-				<li id="theme3"></li>
-				<li id="theme4"></li>
-				<li id="theme5"></li>
-				<li id="theme6"></li>
-			</ul>
-			<hr>
-			<p class="mb-0">Gradient Background</p>
-			<hr>
-			<ul class="switcher">
-				<li id="theme7"></li>
-				<li id="theme8"></li>
-				<li id="theme9"></li>
-				<li id="theme10"></li>
-				<li id="theme11"></li>
-				<li id="theme12"></li>
-			</ul>
-		</div>
-	</div>
-	<!--end switcher-->
 	<!-- Bootstrap JS -->
 	<script src="assets/js/bootstrap.bundle.min.js"></script>
 	<!--plugins-->
@@ -201,11 +177,15 @@ require('seguridad.php');
 	<script src="assets/plugins/highcharts/js/highcharts.js"></script>
 	<script src="assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
 	<script src="assets/js/index2.js"></script>
+	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<script src="assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+	<script src="assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 	<!--app JS-->
 	<script src="assets/js/app.js"></script>
-	<script>
-		new PerfectScrollbar('.dashboard-top-countries');
-	</script>
+	<script src="assets/js/datatables.js"></script>
+	<script src="assets/js/functions.js"></script>
 </body>
 
 </html>

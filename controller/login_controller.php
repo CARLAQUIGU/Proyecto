@@ -39,6 +39,10 @@ class LoginController {
             if ($cot) {
                 $_SESSION['ingreso']='si';
                 $_SESSION['usuario']=$cot->usuario;
+                $_SESSION['nom']=$cot->nombres;
+                $_SESSION['foto']=$cot->foto;
+                $_SESSION['distrito']=$cot->distrito;
+                $_SESSION['id_dis']=$cot->id_dis;
                 $_SESSION['id']=$cot->id;
                 $_SESSION['nivel']=$cot->nivel;
                 if ($cot->nivel== 1) {

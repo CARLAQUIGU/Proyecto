@@ -6617,7 +6617,7 @@ fieldset:disabled .btn {
 	background-color: #17a00e!important
 }
 .bg-info {
-	background-color: #0dcaf0!important
+	background-color: hsl(205, 67%, 34%)!important
 }
 .bg-warning {
 	background-color: #ffc107!important
@@ -6642,6 +6642,9 @@ fieldset:disabled .btn {
 }
 .bg-gradient {
 	background-image: var(--bs-gradient)!important
+}
+.bg-pro {
+	background-color: #1d6191!important
 }
 .text-wrap {
 	white-space: normal!important

@@ -1,7 +1,6 @@
 
 <!doctype html>
 <html lang="en">
-	
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
@@ -14,7 +13,6 @@
 	<link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
 	<link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 	<link href="assets/plugins/highcharts/css/highcharts-white.css" rel="stylesheet" />
-	<link href="assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 	<!-- loader-->
 	<link href="assets/css/pace.min.css" rel="stylesheet" />
 	<script src="assets/js/pace.min.js"></script>
@@ -22,18 +20,23 @@
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/css/app.css" rel="stylesheet">
 	<link href="assets/css/icons.css" rel="stylesheet">
-	<!-- Theme Style CSS --> 
+	<!-- Theme Style CSS -->
 	<link rel="stylesheet" href="assets/css/dark-theme.css" />
 	<link rel="stylesheet" href="assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="assets/css/header-colors.css" />
 <title>DIRECCÍON DEPARTAMENTAL</title>
 </head>
-
 <body class="bg-theme bg-theme1">
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--sidebar wrapper -->
-        <?php include 'nav.php' ?>
+		<?php
+		if($_SESSION['nivel']==1){
+			include ("nav.php");
+		}else{
+			include ("nav2.php");
+		}
+		?>
         <!--end sidebar wrapper -->
 		<!--start header -->
         <?php include 'nav_top.php'  ?>
@@ -65,7 +68,17 @@
 														</div>
 														<br>
 														<label for="">Nombre</label>
-														<input type="text" class="form-control" name="nombre" id="nombre" data-bs-target="#nombre" aria-describedby="helpId" placeholder="Nombre del Distrito">
+														<input type="text" class="form-control" name="nombre" id="nombre" data-bs-target="#nombre" onblur="mayus(this);" aria-describedby="helpId" placeholder="Nombre del Distrito">
+														<br>
+														<label class="form-label">Provincia</label>
+														<br>
+														<select class="single-select, form-control" name="codigoprovincia" id="codigoprovincia">
+															<?php require_once 'model/Distrito.php';
+																$pro= new Provincia();
+																foreach ($pro->mostrar() as $uni) {?>
+																<option value="<?php echo $uni->id;?>"><?php echo $uni->nombre; ?></option> 
+															<?php } ?>
+														</select>
 														<br>
 														<button type="submit" class="btn btn-primary">Guardar</button>
 													</form>
@@ -94,6 +107,7 @@
                                             <th>#</th>
 											<th>Codigo Distrito</th>
                                             <th>Nombre</th>
+											<th>Provincia</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -101,11 +115,12 @@
                                         <?php require_once 'model/Distrito.php';
                                         $a=1;
                                                     $distrito= new Distrito();
-                                                    foreach ($distrito->mostrar() as $dist) {?>
+                                                    foreach ($distrito->mostrar2() as $dist) {?>
                                         <tr>
                                             <td><?php echo $a++; ?></td>
 											<td><?php echo $dist->id; ?></td>
                                             <td><?php echo $dist->distrito; ?></td>
+											<td><?php echo $dist->nombre; ?></td>
                                             <td>
 											<button type="button" onclick="capturar()"  class="btn btn-light px-5 radius-30"><i class='bx bx-pencil mr-1'></i>Editar</button>	 
 											<a class="btn btn-light px-5 radius-30" onclick="javascript:return confirm('ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?');" href="index.php?controller=distrito&action=Estado&id=<?php echo $dist->id;?>"><i class='bx bx-trash mr-1'></i>Eliminar</a></td>
@@ -127,9 +142,21 @@
 			function capturar(){
 			$($("table tbody tr")).on('click',function(){
 				var id= $(this).find("td:eq(1)").text();
-				var nombre= $(this).find("td:eq(2)").text();
+				var nom= $(this).find("td:eq(2)").text();
+				var nombre= $(this).find("td:eq(3)").text();
+				
+				var selec1;
+				var sel1 = document.getElementById("codigoprovincia");
+				for(var i = 0; i<sel1.length; i++ ){
+						var opt=sel1[i];
+						if(opt.text === nombre){
+							window.alert('si');
+							selec1=opt.value;
+						}
+				}
 				$("#id").val(id);
-				$("#nombre").val(nombre);
+				$("#nombre").val(nom);
+				$("#codigoprovincia").val(selec1);
 				$('#exampleVerticallycenteredModal').modal('show');
 			});   
 		};
@@ -137,6 +164,11 @@
 		$(document).ready(function() {
 			$('#example').DataTable();
 		} );
+
+		function mayus(elemento){
+			let texto=elemento.value;
+			elemento.value=texto.toUpperCase();
+		}
 		</script>
 		<!--end page wrapper -->
 		<!--start overlay-->

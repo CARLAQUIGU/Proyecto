@@ -5,7 +5,7 @@ class Con
     private $host='127.0.0.1:3306';
     private $user='root';
     private $pass='';
-    private $dbname='procesos';
+    private $dbname='proyecto';
     private $charset='utf8mb4';
     protected function conexion(){
         try {

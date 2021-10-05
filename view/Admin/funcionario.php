@@ -15,6 +15,7 @@ require('seguridad.php');
 	<link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
 	<link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 	<link href="assets/plugins/highcharts/css/highcharts-white.css" rel="stylesheet" />
+	<link href="assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 	<!-- loader-->
 	<link href="assets/css/pace.min.css" rel="stylesheet" />
 	<script src="assets/js/pace.min.js"></script>
@@ -22,11 +23,11 @@ require('seguridad.php');
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/css/app.css" rel="stylesheet">
 	<link href="assets/css/icons.css" rel="stylesheet">
-	<!-- Theme Style CSS -->
+	<!-- Theme Style CSS --> 
 	<link rel="stylesheet" href="assets/css/dark-theme.css" />
 	<link rel="stylesheet" href="assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="assets/css/header-colors.css" />
-	<title>DIRECCIÓN DEPARTAMENTAL</title>
+<title>DIRECCÍON DEPARTAMENTAL</title>
 </head>
 <style>
 	.hide{
@@ -39,7 +40,13 @@ require('seguridad.php');
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--sidebar wrapper -->
-        <?php include 'nav.php' ?>
+		<?php
+		if($_SESSION['nivel']==1){
+			include ("nav.php");
+		}else{
+			include ("nav2.php");
+		}
+		?>
         <!--end sidebar wrapper -->
 		<!--start header -->
         <header>
@@ -83,16 +90,6 @@ require('seguridad.php');
 														<label for="">RDA</label>
 														<input type="text" class="form-control" name="rda" id="rda" aria-describedby="helpId" placeholder="RDA del Funcionario">
 														<br>
-														<label class="form-label">Unidad Educativa</label>
-														<br>
-														<select class="single-select, form-control" name="codigounidad" id="codigounidad">
-															<?php require_once 'model/Funcionario.php';
-																$unidad= new UnidadEducativa();
-																foreach ($unidad->mostrar2() as $uni) {?>
-																<option value="<?php echo $uni->id;?>"><?php echo $uni->nombre; ?></option> 
-															<?php } ?>
-														</select>
-														<br>
 														<label class="form-label">Cargo</label>
 														<br>
 														<select class="single-select, form-control" name="codigocargo" id="codigocargo">
@@ -103,9 +100,25 @@ require('seguridad.php');
 															<?php } ?>
 														</select>
 														<br>
-														<label class="form-label">Foto</label>
+														<label class="form-label">Distrito</label>
 														<br>
-														<input type="file" accept="image/*,txt" class='form-control' name="imagen" id="imagen">
+														<?php
+														if($_SESSION['nivel']==2){?>
+														<select class="single-select, form-control" name="codigodistrito" id="codigodistrito">
+														<option value="<?php echo $_SESSION['id_dis'];?>"><?php echo $_SESSION['distrito']; ?></option> 
+														</select>
+														<?php 	
+														}else{?>
+															<select class="single-select, form-control" name="codigodistrito" id="codigodistrito">
+															<?php require_once 'model/UnidadEducativa.php';
+																$distrito= new Distrito();
+																foreach ($distrito->mostrar() as $uni) {?>
+																<option value="<?php echo $uni->id;?>"><?php echo $uni->distrito; ?></option> 
+															<?php } ?>
+															</select>
+														<?php
+														}
+														?>
 														<br>
 														</div>
 														<br>
@@ -127,9 +140,10 @@ require('seguridad.php');
 					<div class="col">
 						<div class="card radius-10">
 							<div class="card-body">
+							<div class="col">
 								<h3>Lista de Funcionarios</h3>
                                 <hr>
-                                <table class="table table-striped table-bordered" >
+                                <table class="table table-striped table-bordered" name='example' id="example">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>#</th>
@@ -141,17 +155,20 @@ require('seguridad.php');
 											<th>C.I.</th>
 											<th>RDA</th>
 											<th>Cargo</th>
-											<th>Unidad Educativa</th>
-											<th>Foto</th>
+											<th>Distrito</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody >
-                                        <?php require_once 'model/Funcionario.php';
+									<?php require_once 'model/Funcionario.php';
                                         $a=1;
-                                                    $funcionario= new Funcionario();
-                                                    foreach ($funcionario->mostrar2() as $fun) {?>
-                                        <tr>
+											$funcionario= new Funcionario();
+											$distrit=$_SESSION['id_dis'];
+											if($_SESSION['nivel'] == 2){
+											foreach ($funcionario->mostrar2() as $fun) {
+											if($fun->id_distrito === $distrit){
+											?>	
+                                         <tr>
                                             <td><?php echo $a++; ?></td>
 											<td class="hide"><?php echo $fun->id; ?></td>
 											<td class="hide"><?php echo $fun->nombre; ?></td>
@@ -161,18 +178,42 @@ require('seguridad.php');
 											<td><?php echo $fun->ci; ?></td>
 											<td><?php echo $fun->rda; ?></td>
 											<td><?php echo $fun->cargo; ?></td>
-											<td><?php echo $fun->nom; ?></td>
-											<td><img src='img/<?php echo $fun->foto?>' width="100" height="60"></td>
+											<td><?php echo $fun->distrito; ?></td>
                                             <td>
-												<button type="button" onclick="capturar()"  class="btn btn-light px-5 radius-30"><i class='bx bx-pencil mr-1'></i>Editar</button>	 
-												<a class="btn btn-light px-5 radius-30" onclick="javascript:return confirm('ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?');" href="index.php?controller=funcionario&action=Estado&id=<?php echo $fun->id;?>"><i class='bx bx-trash mr-1'></i>Eliminar</a></td>
+												<button type="button" onclick="capturar()"  class="btn btn-light px-5 radius-30"><i class='bx bx-pencil mr-1'></i></button>	 
+												<a class="btn btn-light px-5 radius-30" onclick="javascript:return confirm('ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?');" href="index.php?controller=funcionario&action=Estado&id=<?php echo $fun->id;?>"><i class='bx bx-trash mr-1'></i></a></td>
                                             </td>
                                         </tr>
-                                    <?php } ?>
+                                    <?php } 
+										}
+									}else{
+										foreach ($funcionario->mostrar2() as $fun) {
+										?>
+										<tr>
+                                            <td><?php echo $a++; ?></td>
+											<td class="hide"><?php echo $fun->id; ?></td>
+											<td class="hide"><?php echo $fun->nombre; ?></td>
+											<td class="hide"><?php echo $fun->paterno; ?></td>
+											<td class="hide"><?php echo $fun->materno; ?></td>
+                                            <td><?php echo $fun->nombres; ?></td>
+											<td><?php echo $fun->ci; ?></td>
+											<td><?php echo $fun->rda; ?></td>
+											<td><?php echo $fun->cargo; ?></td>
+											<td><?php echo $fun->distrito; ?></td>
+                                            <td>
+												<button type="button" onclick="capturar()"  class="btn btn-light px-5 radius-30"><i class='bx bx-pencil mr-1'></i></button>	 
+												<a class="btn btn-light px-5 radius-30" onclick="javascript:return confirm('ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?');" href="index.php?controller=funcionario&action=Estado&id=<?php echo $fun->id;?>"><i class='bx bx-trash mr-1'></i></a></td>
+                                            </td>
+                                        </tr>
+										<?php
+										}
+									}
+									?>
                                     </tbody>
                                     <tfoot>
                                     </tfoot>
                                 </table>
+							  </div>
 							</div>
 						</div>
 					</div>
@@ -191,16 +232,6 @@ require('seguridad.php');
 				var ci= $(this).find("td:eq(6)").text();
 				var rda= $(this).find("td:eq(7)").text();
 				var cargo= $(this).find("td:eq(8)").text();
-				var nom= $(this).find("td:eq(9)").text();
-				var foto= $(this).find("td:eq(10)").text();
-				var images = $('.card-body img').attr('src');
-				var sel = document.getElementById("codigounidad");
-				for(var i = 0; i<sel.length; i++ ){
-						var opt=sel[i];
-						if(opt.text === nom){
-							selec=opt.value;
-						}
-				}
 				var sel1 = document.getElementById("codigocargo");
 				for(var i = 0; i<sel1.length; i++ ){
 						var opt=sel1[i]; 
@@ -215,8 +246,6 @@ require('seguridad.php');
 				$("#ci").val(ci);
 				$("#rda").val(rda);
 				$("#codigocargo").val(selec1);
-				$("#codigounidad").val(selec);
-				$("#imagen").val(foto);
 				$('#exampleVerticallycenteredModal').modal('show');
 			});   
 		};
@@ -255,11 +284,15 @@ require('seguridad.php');
 	<script src="assets/plugins/highcharts/js/highcharts.js"></script>
 	<script src="assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
 	<script src="assets/js/index2.js"></script>
+	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<script src="assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+	<script src="assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 	<!--app JS-->
 	<script src="assets/js/app.js"></script>
-	<script>
-		new PerfectScrollbar('.dashboard-top-countries');
-	</script>
+	<script src="assets/js/datatables.js"></script>
+	<script src="assets/js/functions.js"></script>
 </body>
 
 </html>

@@ -33,7 +33,13 @@ require('seguridad.php');
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--sidebar wrapper -->
-        <?php include 'nav.php' ?>
+		<?php
+		if($_SESSION['nivel']==1){
+			include ("nav.php");
+		}else{
+			include ("nav2.php");
+		}
+		?>
         <!--end sidebar wrapper -->
 		<!--start header -->
         <header>

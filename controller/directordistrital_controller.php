@@ -1,4 +1,5 @@
-<?php require_once 'model/DirectorDistrital.php';
+<?php 
+require_once 'model/DirectorDistrital.php';
 class DirectorDistritalController {
     private $model;
 
@@ -26,7 +27,7 @@ class DirectorDistritalController {
         $director->paterno=$_REQUEST['paterno'];
         $director->materno=$_REQUEST['materno'];
         $director->telefono=$_REQUEST['telefono'];
-        $director->distrito_id=$_REQUEST['codigodistrito'];
+        $director->id_distrito=$_REQUEST['codigodistrito'];
         $director->crear();
         header("location:index.php?controller=directordistrital&action=indexDirectordistrital");
     }

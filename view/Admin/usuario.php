@@ -40,7 +40,13 @@ require('seguridad.php');
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--sidebar wrapper -->
-        <?php include 'nav.php' ?>
+		<?php
+		if($_SESSION['nivel']==1){
+			include ("nav.php");
+		}else{
+			include ("nav2.php");
+		}
+		?>
         <!--end sidebar wrapper -->
 		<!--start header -->
         <header>
@@ -62,34 +68,39 @@ require('seguridad.php');
 											<div class="modal-dialog modal-dialog-centered">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title">Registro de Director Distrital</h5>
+														<h5 class="modal-title">Registro de Usuario</h5>
 														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 													</div>
 													<div class="modal-body">
 													<form action="index.php?controller=login&action=GuardarUsuario" method="post" enctype='multipart/form-data'>
 														<div class="form-group">
-														<select class="single-select, form-control" name="codigodirector">
+															<input type="hidden" name="id" id="id">
+															<label for="">Director Distrital</label>
+															<select class="single-select, form-control" name="codigodirector" id="codigodirector">
 															<?php require_once 'model/DirectorDistrital.php';
-																$director= new DirectorDistrital();
-																foreach ($director->mostrar3() as $uni) {?>
-																<option value="<?php echo $uni->id;?>"><?php echo $uni->nombres; ?></option> 
+																$cargo= new DirectorDistrital();
+																foreach ($cargo->mostrar3() as $car) {?>
+																<option value="<?php echo $car->id;?>"><?php echo $car->nombres; ?></option> 
 															<?php } ?>
-														</select>
-														<br>
-														<label for="">Usuario</label>
-														<input type="text" class="form-control" name="usuario" id="usuario" aria-describedby="helpId" placeholder="Usuario">
-														<br>
-														<label for="">Contraseña</label>
-														<input type="password" class="form-control" name="pasw" id="pasw" aria-describedby="helpId" placeholder="Contraseña">
-														<br>
-														<label for="">Nivel</label>
-														<select name="nivel" id="nivel" class="form-control">
-															<option value="1">Administrador</option>
-															<option value="2">Director Distrital</option>
-														</select>
-														<br>
+															</select>
+															<br>
+															<label for="">Usuario</label>
+															<input type="text" class="form-control" name="usuario" id="usuario" aria-describedby="helpId" placeholder="Usuario">
+															<br>
+															<label for="">Contraseña</label>
+															<input type="password" class="form-control" name="pasw" id="pasw" aria-describedby="helpId" placeholder="Contraseña">
+															<br>
+															<label for="">Nivel</label>
+															<select name="nivel" id="nivel" class="form-control">
+																<option value="1">Administrador</option>
+																<option value="2">Director Distrital</option>
+															</select>
+															<br>
+															<label class="form-label">Foto</label>
+															<br>
+															<input type="file" accept="image/*,txt" class='form-control' name="imagen" id="imagen">
+															<br>
 														</div>
-														<br>
 														<button type="submit" class="btn btn-primary">Guardar</button>
 													</form>
 													</div>
@@ -107,16 +118,18 @@ require('seguridad.php');
                 <div class="row row-cols-1 ">
 					<div class="col">
 						<div class="card radius-10">
-							<div class="card-body">
+							<div class="card-body table-responsive">
+								<div><a class="btn btn-light px-5 radius-10"  style="float: right;" href="view/Admin/reportes/reporteUsuario.php"><i class='bx bx-file mr-1'></i>Reporte</a></div>
 								<h3>Lista de Usuarios</h3>
                                 <hr>
                                 <table class="table table-light">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>#</th>
-                                            <th>Empleado</th>
+                                            <th>Nombre</th>
 											<th>Usuario</th>
 											<th>Nivel</th>
+											<th>foto</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -127,13 +140,19 @@ require('seguridad.php');
                                                     foreach ($user->mostrar2() as $usuario) {?>
                                         <tr>
                                             <td><?php echo $a++; ?></td>
-                                            <td><?php echo $dire->nombres; ?></td>
-											<td><?php echo $dire->usuario; ?></td>
-											<td><?php echo $dire->nivel; ?></td>
-                                            <td>
-                                                <a href="">editar</a>
-                                                <a href="">eliminar</a>
-                                            </td>
+                                            <td><?php echo $usuario->nombres; ?></td>
+											<td><?php echo $usuario->usuario; ?></td>
+											<td><?php if($usuario->nivel==1){
+													echo 'Administrador';
+											}else{
+												echo 'Director';
+											}
+											?></td>
+											<td><img src='img/<?php echo $usuario->foto?>' width="100" height="90"></td>
+											<td>
+													<button type="button" onclick="capturar()"  class="btn btn-light px-5 radius-30"><i class='bx bx-pencil mr-1'></i></button>	 
+													<a class="btn btn-light px-5 radius-30" onclick="javascript:return confirm('ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?');" href="index.php?controller=funcionario&action=Estado&id=<?php echo $fun->id;?>"><i class='bx bx-trash mr-1'></i></a></td>
+											</td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
@@ -141,6 +160,7 @@ require('seguridad.php');
                                     </tfoot>
                                 </table>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -157,40 +177,6 @@ require('seguridad.php');
 		</footer>
 	</div>
 	<!--end wrapper-->
-	<!--start switcher-->
-	<div class="switcher-wrapper">
-		<div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
-		</div>
-		<div class="switcher-body">
-			<div class="d-flex align-items-center">
-				<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
-				<button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
-			</div>
-			<hr/>
-			<p class="mb-0">Gaussian Texture</p>
-			<hr>
-			<ul class="switcher">
-				<li id="theme1"></li>
-				<li id="theme2"></li>
-				<li id="theme3"></li>
-				<li id="theme4"></li>
-				<li id="theme5"></li>
-				<li id="theme6"></li>
-			</ul>
-			<hr>
-			<p class="mb-0">Gradient Background</p>
-			<hr>
-			<ul class="switcher">
-				<li id="theme7"></li>
-				<li id="theme8"></li>
-				<li id="theme9"></li>
-				<li id="theme10"></li>
-				<li id="theme11"></li>
-				<li id="theme12"></li>
-			</ul>
-		</div>
-	</div>
-	<!--end switcher-->
 	<!-- Bootstrap JS -->
 	<script src="assets/js/bootstrap.bundle.min.js"></script>
 	<!--plugins-->

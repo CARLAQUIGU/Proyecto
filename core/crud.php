@@ -43,8 +43,6 @@ abstract class Crud extends Con{
         }
     }
     
-    abstract function buscar($a);
     abstract function crear();
-    abstract function actualizar();
 }
 ?>

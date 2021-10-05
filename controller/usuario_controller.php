@@ -1,4 +1,6 @@
-<?php require_once 'model/Usuario.php';
+<?php 
+require_once 'model/Usuario.php';
+require_once 'model/DirectorDistrital.php';
 class UsuarioController {
     private $model;
 
@@ -19,7 +21,12 @@ class UsuarioController {
         $usuario->nivel=$_REQUEST['nivel'];
         $usuario->estado=$_REQUEST['Activo'];
         $usuario->id_director=$_REQUEST['codigodirector'];
+        $usuario->foto=$_FILES['imagen']['name'];
+        $a=$_FILES['imagen']['name'];
+        $b=$_FILES['imagen']['tmp_name'];
+        $usuario->id=$_REQUEST['id'];
         $usuario->id>0?$usuario->actualizar():$usuario->crear();
+        @copy($b,"img/".$a);
         header("location:index.php?controller=usuario&action=indexUsuario");
     }
 

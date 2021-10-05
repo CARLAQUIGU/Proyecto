@@ -1,4 +1,6 @@
-<?php require_once 'model/Distrito.php';
+<?php
+require_once 'model/Distrito.php';
+require_once 'model/Provincia.php';
 class DistritoController {
     private $model;
 
@@ -10,30 +12,18 @@ class DistritoController {
         session_start();
         require_once 'view/Admin/distrito.php';
     }
-    public function MostrarxId(){
-        $distrito=new Distrito();
-        if(isset($_REQUEST['id'])){
-            $distrito=$this->model->obtenerxId($_REQUEST['id']);
-        }
-        require_once 'view/Admin/distrito.php';
-    }
 
     public function Guardardistrito() {
         session_start();
         $distrito=new Distrito();
         $distrito->distrito=$_REQUEST['nombre'];
         $distrito->id=$_REQUEST['id'];
+        $distrito->id_provincia=$_REQUEST['codigoprovincia'];
         //$distrito->id>0?$distrito->actualizar():$distrito->crear();
         $distrito->crear();
         header("location:index.php?controller=distrito&action=indexDistrito");
     }
 
-    public function busqueda(){
-        $dis=new Distrito();
-        $r=$_REQUEST['busqueda'];
-        $w=$dis->buscar($r);
-        require_once 'view/Admin/distritobusqueda.php';
-    }
     public function Estado(){
         session_start();
         $distrito=new Distrito();

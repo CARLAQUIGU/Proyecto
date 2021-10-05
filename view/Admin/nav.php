@@ -1,29 +1,33 @@
+
 <div class="sidebar-wrapper" data-simplebar="true">
+
 			<div class="sidebar-header">
 				<div>
-					<img src="assets/images/logoo.png" class="logo-icon" alt="logo icon">
+					<img class="img-fluid" src="assets/images/esquina.png" alt="" width="150" height="150">
 				</div>
 				<div>
-					<h4 class="logo-text">DDELP   -</h4>
 				</div>
-				<a href="index.php?controller=login&action=cerrar">
 					<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
-					</div>
-				</a>
+				</div>
 			</div>
 			<!--navigation-->
 			<ul class="metismenu" id="menu">
 				<li>
-					<a href="index.php?controller=distrito&action=indexDistrito">
-						<div class="parent-icon"><i class='bx bx-home-circle'></i>
+				<div class="d-flex flex-column align-items-center text-center">
+					<img src='img/<?php echo $_SESSION['foto']; ?>' alt="Admin" class="rounded-circle p-1 bg-darck" width="150" height="140">
+						<div class="mt-3">
+						<h5><?php 
+									echo "<font color='white'>".$_SESSION['nom']."</font>";
+								?>
+						</h5>
+						<p class="mb-1">ADMINISTRADOR</p>
 						</div>
-						<div class="menu-title">Dashboard</div>
-					</a>
+					</div>
 				</li>
 				<li class="menu-label">Elementos</li>
 				<li>
 					<a href="index.php?controller=distrito&action=indexDistrito">
-						<div class="parent-icon"><i class='bx bx-cookie'></i>
+						<div class="parent-icon"><i class='bx bx-grid-alt'></i>
 						</div>
 						<div class="menu-title">Distrito</div>
 					</a>
@@ -64,35 +68,20 @@
 					</a>
 				</li>
 				<li>
-					<a href="index.php?controller=login&action=indexUsuario">
+					<a href="index.php?controller=usuario&action=indexUsuario">
 						<div class="parent-icon"><i class='bx bx-cookie'></i>
 						</div>
 						<div class="menu-title">Usuarios</div>
 					</a>
 				</li>
 				<li>
-					<a href="index.php?controller=login&action=indexProcesos">
+					<a href="index.php?controller=proceso&action=indexProceso">
 						<div class="parent-icon"><i class='bx bx-cookie'></i>
 						</div>
 						<div class="menu-title">Procesos</div>
-					</a>
-				</li>
-				<li>
-					<a href="index.php?controller=login&action=indexDetalleProcesos">
-						<div class="parent-icon"><i class='bx bx-cookie'></i>
-						</div>
-						<div class="menu-title">Detalle Procesos</div>
 					</a>
 				</li>
 			</ul>
 			<link rel="icon" href="assets/images/logo.png" type="image/png"  />
 			<!--end navigation-->
 		</div>
-		<script src="assets/js/bootstrap.bundle.min.js"></script>
-	<!--plugins-->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
-	<!--app JS-->
-	<script src="assets/js/app.js"></script>

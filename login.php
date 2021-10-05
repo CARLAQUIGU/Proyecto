@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
@@ -20,24 +19,31 @@
 	<link href="assets/css/icons.css" rel="stylesheet">
 	<title>Dashtrans - Bootstrap5 Admin Template</title>
 </head>
+<style>
+	body {
+		background-color: white;
+	}
 
+	.bg-pro {
+		background-color: hsl(205, 56%, 26%);
+	}
+</style>
 
-<body class="bg-theme bg-theme6">
+<body class="bg-theme bg-theme1">
+	<div class="container-fluid p-6 bg-pro text-white text-center">
+		<div>
+			<img class="img-fluid" src="assets/images/encabezado.png" alt="" width="1100" height="500">
+		</div>
+	</div>
 	<!--wrapper-->
 	<div class="wrapper">
-		<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+		<div class=" my-lg-5">
 			<div class="container-fluid">
 				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
 					<div class="col mx-auto">
-						<div class="mb-5 text-center">
-						</div>
 						<div class="card">
 							<div class="card-body">
-								<div class="border p-4 rounded">
-									<div class="text-center">
-										<h3 class="">Sign in</h3>
-
-									</div>
+								<div class="border p-5 rounded">
 									<div class="d-grid">
 										<img img src="assets/images/logo.png" class="mx-auto d-block" style="width:20%">
 									</div>
@@ -50,32 +56,32 @@
 											<div class="col-12">
 												<label for="inputChoosePassword" class="form-label">CONTRASEÑA</label>
 												<div class="input-group" id="show_hide_password">
-													<input type="password" class="form-control border-end-0" id="password" name="password"  placeholder="Dijite su contraseña"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+													<input type="password" class="form-control border-end-0" id="password" name="password" placeholder="Dijite su contraseña"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
 												</div>
 											</div>
-											<div class="col-12">
-												<div class="d-grid">
-													<button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Sign in</button>
-												</div>
-												<?php
-													if(isset($_REQUEST['res'])){
-														if ($_REQUEST['res']==1) {
-												?>
-														<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-														 Verifica datos de Usuario y Password. 
-														</div>
+												<div class="col-12">
+													<div class="d-grid">
+														<button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Sign in</button>
+													</div>
+													<?php
+													if (isset($_REQUEST['res'])) {
+														if ($_REQUEST['res'] == 1) {
+													?>
+															<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+																Verifica datos de Usuario y Password.
+															</div>
 
-												<?php        
-														}else if($_REQUEST['res']==2){
-												?>
-														<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-															No se Inicio
-														</div>
-												<?php
+														<?php
+														} else if ($_REQUEST['res'] == 2) {
+														?>
+															<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+																No se Inicio
+															</div>
+													<?php
 														}
 													}
-												?>
-											</div>
+													?>
+												</div>
 											<div>
 											</div>
 										</form>
@@ -99,8 +105,8 @@
 	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
 	<!--Password show & hide js -->
 	<script>
-		$(document).ready(function () {
-			$("#show_hide_password a").on('click', function (event) {
+		$(document).ready(function() {
+			$("#show_hide_password a").on('click', function(event) {
 				event.preventDefault();
 				if ($('#show_hide_password input').attr("type") == "text") {
 					$('#show_hide_password input').attr('type', 'password');
@@ -119,4 +125,4 @@
 </body>
 
 
-</html> 
+</html>

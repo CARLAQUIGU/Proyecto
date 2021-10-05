@@ -1,4 +1,6 @@
-<?php require_once 'model/Funcionario.php';
+<?php 
+require_once 'model/Funcionario.php';
+require_once 'model/Proceso.php';
 class FuncionarioController {
     private $model;
 
@@ -19,15 +21,23 @@ class FuncionarioController {
         $funcionario->materno=$_REQUEST['materno'];
         $funcionario->ci=$_REQUEST['ci'];
         $funcionario->rda=$_REQUEST['rda'];
-        $funcionario->unidad_educativa_id=$_REQUEST['codigounidad'];
-        $funcionario->cargo_id=$_REQUEST['codigocargo'];
-        $funcionario->foto=$_FILES['imagen']['name'];
-        $a=$_FILES['imagen']['name'];
-        $b=$_FILES['imagen']['tmp_name'];
-        $funcionario->id=$_REQUEST['id'];
+        $funcionario->id_cargo=$_REQUEST['codigocargo'];
+        $funcionario->id_distrito=$_REQUEST['codigodistrito'];
         $funcionario->id>0?$funcionario->actualizar():$funcionario->crear();
-        @copy($b,"img/".$a);
         header("location:index.php?controller=funcionario&action=indexFuncionario");
+    }
+    public function GuardarFuncionario2() {
+        session_start();
+        $funcionario=new Funcionario();
+        $funcionario->nombre=$_REQUEST['nombre'];
+        $funcionario->paterno=$_REQUEST['paterno'];
+        $funcionario->materno=$_REQUEST['materno'];
+        $funcionario->ci=$_REQUEST['ci'];
+        $funcionario->rda=$_REQUEST['rda'];
+        $funcionario->id_cargo=$_REQUEST['codigocargo'];
+        $funcionario->id_distrito=$_REQUEST['codigodistrito'];
+        $funcionario->id>0?$funcionario->actualizar():$funcionario->crear();
+        header("location:index.php?controller=proceso&action=form");
     }
     public function Estado(){
         session_start();
